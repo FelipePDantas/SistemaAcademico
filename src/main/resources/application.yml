@@ -1,0 +1,12 @@
+
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sistema_academico
+    username: postgres
+    password: postgres
+  jackson:
+    default-property-inclusion: non_null
