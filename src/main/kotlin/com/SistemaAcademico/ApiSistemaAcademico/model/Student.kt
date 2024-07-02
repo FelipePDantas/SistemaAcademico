@@ -21,6 +21,6 @@ data class Student(
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    var course: Course
+    var course: Course? = null
 
 )
