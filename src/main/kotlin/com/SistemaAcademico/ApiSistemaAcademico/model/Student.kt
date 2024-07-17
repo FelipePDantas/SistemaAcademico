@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne
 import java.util.UUID
 
 @Entity
-data class Student(
+class Student(
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -10,3 +10,5 @@ spring:
     password: postgres
   jackson:
     default-property-inclusion: non_null
+
+

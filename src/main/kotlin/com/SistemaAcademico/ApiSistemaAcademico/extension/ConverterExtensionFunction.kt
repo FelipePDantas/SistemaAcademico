@@ -7,7 +7,7 @@ import com.SistemaAcademico.ApiSistemaAcademico.model.dtos.StudentRequest
 import java.util.*
 
 fun StudentRequest.toStudentModel(course1: Course): Student{
-    return Student(UUID.randomUUID(),nome = this.nome,email =this.email, course = course1)
+    return Student(UUID.randomUUID(),nome = this.nome,email =this.email!!, course = course1)
 }
 
 fun CourseRequest.toCourseModel() : Course{

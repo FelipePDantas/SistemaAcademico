@@ -7,7 +7,7 @@ data class StudentRequest (
 
     var nome: String,
 
-    var email: String,
+    var email: String?,
 
     @JsonAlias("course_id")
     var courseId: UUID
