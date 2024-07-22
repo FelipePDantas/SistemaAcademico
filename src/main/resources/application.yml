@@ -11,4 +11,5 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
-
+urlServIntitution:
+  uri: "http://localhost:8081"

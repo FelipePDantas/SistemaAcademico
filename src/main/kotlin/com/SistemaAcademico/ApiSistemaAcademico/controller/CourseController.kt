@@ -2,6 +2,7 @@ package com.SistemaAcademico.ApiSistemaAcademico.controller
 
 import com.SistemaAcademico.ApiSistemaAcademico.extension.toCourseModel
 import com.SistemaAcademico.ApiSistemaAcademico.model.Course
+import com.SistemaAcademico.ApiSistemaAcademico.model.Institution
 import com.SistemaAcademico.ApiSistemaAcademico.model.dtos.CourseRequest
 import com.SistemaAcademico.ApiSistemaAcademico.service.CourseService
 import jakarta.validation.Valid
@@ -25,11 +26,13 @@ import java.util.UUID
 class CourseController(
     val courseService: CourseService
 ) {
-
-    @PostMapping
+    // Pensei em antes de fazer o Post fazer um compareTo com o Id lá da outra api
+    @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid courseRequest: CourseRequest){
-        courseService.create(courseRequest.toCourseModel())
+    fun create(@RequestBody @Valid courseRequest: CourseRequest,@PathVariable id: UUID){
+        var map = hashMapOf("id" to ""+id )
+
+        courseService.create(courseRequest.toCourseModel(id))
     }
 
     @GetMapping
@@ -50,5 +53,11 @@ class CourseController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteById(@PathVariable id: UUID){
         courseService.deleteById(id)
+    }
+
+    @GetMapping("/institutions/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    fun getInstituions(@PathVariable id: UUID): Institution? {
+        return courseService.getInstitution(id)
     }
 }

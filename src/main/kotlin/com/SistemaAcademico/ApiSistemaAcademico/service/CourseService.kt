@@ -2,22 +2,30 @@ package com.SistemaAcademico.ApiSistemaAcademico.service
 
 import com.SistemaAcademico.ApiSistemaAcademico.exception.NotFoundException
 import com.SistemaAcademico.ApiSistemaAcademico.model.Course
-import com.SistemaAcademico.ApiSistemaAcademico.model.dtos.CourseRequest
+import com.SistemaAcademico.ApiSistemaAcademico.model.Institution
 import com.SistemaAcademico.ApiSistemaAcademico.repository.CourseRepository
-import lombok.extern.log4j.Log4j2
-import org.hibernate.query.sqm.tree.SqmNode.log
 import org.springframework.stereotype.Service
-import java.util.Optional
+import org.springframework.web.client.RestTemplate
+import org.springframework.web.client.getForObject
 import java.util.UUID
 
 @Service
-@Log4j2
+
 class CourseService(
-    val courseRepository: CourseRepository
+    val courseRepository: CourseRepository,
+    val restTemplate: RestTemplate
 ) {
 
-    fun create(course: Course){
+    fun getInstitution(id: UUID): Institution? {
+        val url = "http://localhost:8081/institutions/$id"
+       return restTemplate.getForObject(url, Institution::class.java)
+    }
 
+
+    fun create(course: Course, id: UUID){
+        val url = "http://localhost:8081/institutions/$id"
+        var idInstitution = restTemplate.getForObject(url,Institution::class.java)
+        course.institution = idInstitution!!.id
         courseRepository.save(course)
     }
 
@@ -33,6 +41,7 @@ class CourseService(
     fun deleteById(id: UUID){
         courseRepository.deleteById(id)
     }
+
 
 
 }

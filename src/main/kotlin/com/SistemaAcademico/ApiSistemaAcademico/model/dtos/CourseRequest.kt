@@ -4,6 +4,7 @@ import com.SistemaAcademico.ApiSistemaAcademico.enums.CourseTypeEnum
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
+import java.util.*
 
 data class CourseRequest (
 
@@ -13,5 +14,7 @@ data class CourseRequest (
     @field:NotNull (message = "Price not null")
     var monthlyCost: BigDecimal,
 
-    var type: CourseTypeEnum
+    var type: CourseTypeEnum,
+
+    var institution: UUID
 )

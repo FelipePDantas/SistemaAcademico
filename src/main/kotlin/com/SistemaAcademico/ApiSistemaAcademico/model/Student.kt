@@ -23,4 +23,6 @@ class Student(
     @JoinColumn(name = "course_id")
     var course: Course? = null
 
+
+
 )
