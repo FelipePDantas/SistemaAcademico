@@ -26,6 +26,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.3.1")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
 //	implementation("io.springfox:springfox-swagger2:3.0.0")
 	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui

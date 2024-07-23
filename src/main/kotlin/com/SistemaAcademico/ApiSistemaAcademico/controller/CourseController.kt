@@ -26,13 +26,11 @@ import java.util.UUID
 class CourseController(
     val courseService: CourseService
 ) {
-    // Pensei em antes de fazer o Post fazer um compareTo com o Id lá da outra api
-    @PostMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid courseRequest: CourseRequest,@PathVariable id: UUID){
-        var map = hashMapOf("id" to ""+id )
 
-        courseService.create(courseRequest.toCourseModel(id))
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    fun create(@RequestBody @Valid courseRequest: CourseRequest){
+        courseService.create(courseRequest.toCourseModel())
     }
 
     @GetMapping
@@ -55,9 +53,9 @@ class CourseController(
         courseService.deleteById(id)
     }
 
-    @GetMapping("/institutions/{id}")
+    @GetMapping("/institutions")
     @ResponseStatus(HttpStatus.OK)
-    fun getInstituions(@PathVariable id: UUID): Institution? {
-        return courseService.getInstitution(id)
+    fun getInstituions(): List<Institution> {
+        return courseService.getAllInstitution()
     }
 }

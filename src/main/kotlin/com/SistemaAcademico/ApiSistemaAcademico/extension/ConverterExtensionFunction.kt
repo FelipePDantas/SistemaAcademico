@@ -10,6 +10,6 @@ fun StudentRequest.toStudentModel(course1: Course): Student{
     return Student(UUID.randomUUID(),nome = this.nome,email =this.email!!, course = course1)
 }
 
-fun CourseRequest.toCourseModel(id: UUID) : Course{
-    return Course(UUID.randomUUID(),name= this.name,monthlyCost = this.monthlyCost,type = this.type, institution = id)
+fun CourseRequest.toCourseModel() : Course{
+    return Course(UUID.randomUUID(),name= this.name,monthlyCost = this.monthlyCost,type = this.type, institutionId = this.institution)
 }
