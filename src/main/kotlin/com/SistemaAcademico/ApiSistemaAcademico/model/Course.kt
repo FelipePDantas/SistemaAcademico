@@ -22,8 +22,4 @@ data class Course(
     var institutionId: UUID
 
 
-
-
-
-
 )

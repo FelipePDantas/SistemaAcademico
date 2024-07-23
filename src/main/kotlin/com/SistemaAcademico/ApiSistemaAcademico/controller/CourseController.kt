@@ -29,27 +29,27 @@ class CourseController(
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid courseRequest: CourseRequest){
+    fun create(@RequestBody @Valid courseRequest: CourseRequest) {
         courseService.create(courseRequest.toCourseModel())
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getAll(): List<Course>{
-      return courseService.getAll()
+    fun getAll(): List<Course> {
+        return courseService.getAll()
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun getById(@PathVariable id: UUID): Course{
-      return courseService.getById(id)
+    fun getById(@PathVariable id: UUID): Course {
+        return courseService.getById(id)
     }
 
-    fun put(){}
+    fun put() {}
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteById(@PathVariable id: UUID){
+    fun deleteById(@PathVariable id: UUID) {
         courseService.deleteById(id)
     }
 

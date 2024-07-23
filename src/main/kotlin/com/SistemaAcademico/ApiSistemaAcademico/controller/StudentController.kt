@@ -19,29 +19,27 @@ class StudentController(
 ) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid student: StudentRequest){
-       val course = courseService.getById(student.courseId)
+    fun create(@RequestBody @Valid student: StudentRequest) {
+        val course = courseService.getById(student.courseId)
         studentService.create(student.toStudentModel(course))
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getAll(): List<Student>{
-       return studentService.getAll()
+    fun getAll(): List<Student> {
+        return studentService.getAll()
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun getById(@PathVariable id: UUID): Student? {
         var studentExist = studentService.getById(id).orElseThrow()
-        return  studentExist
+        return studentExist
     }
-
-
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteById(@PathVariable id: UUID){
+    fun deleteById(@PathVariable id: UUID) {
         studentService.deleteById(id)
     }
 }

@@ -8,8 +8,9 @@ import org.springframework.web.client.RestTemplate
 class AppConfig {
 
     @Bean
-    fun restTemplate(): RestTemplate{ return RestTemplate()}
-
+    fun restTemplate(): RestTemplate {
+        return RestTemplate()
+    }
 
 
 }

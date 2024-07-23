@@ -11,10 +11,11 @@ import org.springframework.context.annotation.Configuration
 class SwaggerConfig() {
 
     @Bean
-    fun customOpenApi(): OpenAPI{
+    fun customOpenApi(): OpenAPI {
 
         return OpenAPI().components(Components())
-            .info(Info()
+            .info(
+                Info()
                     .title("Sistema Academico")
 
             )

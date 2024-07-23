@@ -23,47 +23,45 @@ class CourseService(
     val restTemplate: RestTemplate,
 ) {
 
-    fun getAllInstitution(): List<Institution>{
+    fun getAllInstitution(): List<Institution> {
         val url = "http://localhost:8081/institutions"
-       val responseEntity = restTemplate.exchange(
+        val responseEntity = restTemplate.exchange(
             url,
             HttpMethod.GET,
             null,
-            object: ParameterizedTypeReference<List<Institution>>(){}
+            object : ParameterizedTypeReference<List<Institution>>() {}
         )
         return responseEntity.body ?: emptyList()
     }
 
 
-    fun create(course: Course){
+    fun create(course: Course) {
         val url = "http://localhost:8081/institutions/check/${course.institutionId}"
         val responseEntity = restTemplate.exchange(
             url,
             HttpMethod.GET,
             null,
-            object : ParameterizedTypeReference<Boolean>(){}
+            object : ParameterizedTypeReference<Boolean>() {}
         )
-        if (responseEntity.body == true){
+        if (responseEntity.body == true) {
             courseRepository.save(course)
-        }
-        else{
-          throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        } else {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND)
         }
     }
 
-    fun getAll(): List<Course>{
-      var courseList =  courseRepository.findAll()
+    fun getAll(): List<Course> {
+        var courseList = courseRepository.findAll()
         return courseList
     }
 
-    fun getById(id: UUID): Course{
-        return courseRepository.findById(id).orElseThrow{ NotFoundException("Não existe esse ${id}","C001")}
+    fun getById(id: UUID): Course {
+        return courseRepository.findById(id).orElseThrow { NotFoundException("Não existe esse ${id}", "C001") }
     }
 
-    fun deleteById(id: UUID){
+    fun deleteById(id: UUID) {
         courseRepository.deleteById(id)
     }
-
 
 
 }

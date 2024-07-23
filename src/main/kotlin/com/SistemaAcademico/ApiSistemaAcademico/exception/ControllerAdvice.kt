@@ -21,8 +21,9 @@ class ControllerAdvice {
             ex.errorCode,
             null
         )
-        return ResponseEntity(err,HttpStatus.NOT_FOUND)
+        return ResponseEntity(err, HttpStatus.NOT_FOUND)
     }
+
     @ExceptionHandler(BadRequestException::class)
     fun handleBadRequestException(ex: BadRequestException, request: WebRequest): ResponseEntity<ErrorResponse> {
 
@@ -32,11 +33,14 @@ class ControllerAdvice {
             ex.errorCode,
             null
         )
-        return ResponseEntity(err,HttpStatus.NOT_FOUND)
+        return ResponseEntity(err, HttpStatus.NOT_FOUND)
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handlerMethodArgumentNotValidException(ex: MethodArgumentNotValidException, request: WebRequest): ResponseEntity<ErrorResponse> {
+    fun handlerMethodArgumentNotValidException(
+        ex: MethodArgumentNotValidException,
+        request: WebRequest
+    ): ResponseEntity<ErrorResponse> {
 
         var err = ErrorResponse(
             HttpStatus.UNPROCESSABLE_ENTITY.value(),
@@ -44,7 +48,7 @@ class ControllerAdvice {
             "CR001",
             ex.bindingResult.fieldErrors.map { FieldErrorResponse(it.defaultMessage ?: "ivalid", it.field) }
         )
-        return ResponseEntity(err,HttpStatus.UNPROCESSABLE_ENTITY)
+        return ResponseEntity(err, HttpStatus.UNPROCESSABLE_ENTITY)
 
 
     }

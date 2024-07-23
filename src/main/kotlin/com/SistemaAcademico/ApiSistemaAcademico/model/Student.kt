@@ -24,5 +24,4 @@ class Student(
     var course: Course? = null
 
 
-
 )
