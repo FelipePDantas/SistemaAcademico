@@ -19,6 +19,6 @@ fun CourseRequest.toCourseModel(): Course {
         name = this.name,
         monthlyCost = this.monthlyCost,
         type = this.type,
-        institutionId = this.institution
+        institutionId = this.institutionId
     )
 }

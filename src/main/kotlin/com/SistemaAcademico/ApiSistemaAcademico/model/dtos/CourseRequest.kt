@@ -6,15 +6,15 @@ import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
 import java.util.*
 
-data class CourseRequest(
+class CourseRequest(
 
     @field:NotEmpty(message = "Name not empty")
-    var name: String,
+    val name: String,
 
     @field:NotNull(message = "Price not null")
-    var monthlyCost: BigDecimal,
+    val monthlyCost: BigDecimal,
 
-    var type: CourseTypeEnum,
+    val type: CourseTypeEnum,
 
-    var institution: UUID
+    val institutionId: UUID
 )

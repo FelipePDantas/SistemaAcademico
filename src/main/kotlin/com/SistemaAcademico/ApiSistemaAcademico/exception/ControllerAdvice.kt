@@ -28,14 +28,37 @@ class ControllerAdvice {
     fun handleBadRequestException(ex: BadRequestException, request: WebRequest): ResponseEntity<ErrorResponse> {
 
         var err = ErrorResponse(
-            HttpStatus.NOT_FOUND.value(),
-            "Invalid Request",
+            HttpStatus.CONFLICT.value(),
+            ex.message,
             ex.errorCode,
             null
         )
         return ResponseEntity(err, HttpStatus.NOT_FOUND)
     }
 
+    @ExceptionHandler(TimeoutException::class)
+    fun timeoutException(ex: TimeoutException, request: WebRequest): ResponseEntity<ErrorResponse> {
+
+        var err = ErrorResponse(
+            HttpStatus.CONFLICT.value(),
+            ex.message,
+            ex.errorCode,
+            null
+        )
+        return ResponseEntity(err, HttpStatus.CONFLICT)
+    }
+
+    @ExceptionHandler(IdDoesNotExistException::class)
+    fun handleIdDoesNotExist(ex: IdDoesNotExistException, request: WebRequest): ResponseEntity<ErrorResponse> {
+
+        var err = ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            ex.message,
+            ex.errorCode,
+            null
+        )
+        return ResponseEntity(err, HttpStatus.NOT_FOUND)
+    }
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handlerMethodArgumentNotValidException(
         ex: MethodArgumentNotValidException,

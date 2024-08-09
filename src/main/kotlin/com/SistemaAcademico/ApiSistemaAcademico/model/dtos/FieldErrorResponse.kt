@@ -1,8 +1,8 @@
 package com.SistemaAcademico.ApiSistemaAcademico.model.dtos
 
-data class FieldErrorResponse(
+class FieldErrorResponse(
 
-    var message: String,
+    val message: String,
 
-    var field: String
+    val field: String
 )

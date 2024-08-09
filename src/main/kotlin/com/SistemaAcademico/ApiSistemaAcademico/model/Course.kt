@@ -6,7 +6,7 @@ import java.math.BigDecimal
 import java.util.UUID
 
 @Entity
-data class Course(
+ class Course(
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -14,12 +14,12 @@ data class Course(
 
     val name: String,
 
-    val monthlyCost: BigDecimal,
+    var monthlyCost: BigDecimal,
 
     @Enumerated(EnumType.STRING)
-    var type: CourseTypeEnum,
+    val type: CourseTypeEnum,
 
-    var institutionId: UUID
+    val institutionId: UUID
 
 
 )

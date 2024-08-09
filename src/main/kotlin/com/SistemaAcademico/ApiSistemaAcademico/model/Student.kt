@@ -15,13 +15,13 @@ class Student(
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID,
 
-    var nome: String,
+    val nome: String,
 
-    var email: String,
+    val email: String,
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    var course: Course? = null
+    val course: Course? = null
 
 
 )

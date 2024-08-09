@@ -1,9 +1,9 @@
 package com.SistemaAcademico.ApiSistemaAcademico.model.dtos
 
-data class ErrorResponse(
+class ErrorResponse(
 
-    var httpCode: Int,
-    var message: String,
-    var internalCode: String,
-    var errors: List<FieldErrorResponse>?
+    val httpCode: Int,
+    val message: String,
+    val internalCode: String,
+    val errors: List<FieldErrorResponse>?
 )
