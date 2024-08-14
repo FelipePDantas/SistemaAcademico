@@ -1,6 +1,7 @@
 package com.SistemaAcademico.ApiSistemaAcademico.service
 
 import com.SistemaAcademico.ApiSistemaAcademico.model.Student
+import com.SistemaAcademico.ApiSistemaAcademico.model.dtos.ConsumingApii
 import com.SistemaAcademico.ApiSistemaAcademico.model.dtos.StudentRequest
 import com.SistemaAcademico.ApiSistemaAcademico.repository.StudentRepository
 import lombok.extern.log4j.Log4j2

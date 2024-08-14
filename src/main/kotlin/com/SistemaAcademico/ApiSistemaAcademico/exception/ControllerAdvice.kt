@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
+import javax.naming.ServiceUnavailableException
 
 @ControllerAdvice
 class ControllerAdvice {
@@ -48,6 +49,33 @@ class ControllerAdvice {
         return ResponseEntity(err, HttpStatus.CONFLICT)
     }
 
+    @ExceptionHandler(QueryErrorException::class)
+    fun timeoutException(ex: QueryErrorException, request: WebRequest): ResponseEntity<ErrorResponse> {
+
+        var err = ErrorResponse(
+            HttpStatus.CONFLICT.value(),
+            ex.message,
+            ex.errorCode,
+            null
+        )
+        return ResponseEntity(err, HttpStatus.CONFLICT)
+    }
+
+    @ExceptionHandler(ServiceUnavailableException::class)
+    fun serviceUnavailableException(
+        ex: ServiceUnavailableException,
+        request: WebRequest
+    ): ResponseEntity<ErrorResponse> {
+
+        var err = ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            "Erro na consulta",
+            "EN:100",
+            null
+        )
+        return ResponseEntity(err, HttpStatus.NOT_FOUND)
+    }
+
     @ExceptionHandler(IdDoesNotExistException::class)
     fun handleIdDoesNotExist(ex: IdDoesNotExistException, request: WebRequest): ResponseEntity<ErrorResponse> {
 
@@ -59,6 +87,7 @@ class ControllerAdvice {
         )
         return ResponseEntity(err, HttpStatus.NOT_FOUND)
     }
+
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handlerMethodArgumentNotValidException(
         ex: MethodArgumentNotValidException,

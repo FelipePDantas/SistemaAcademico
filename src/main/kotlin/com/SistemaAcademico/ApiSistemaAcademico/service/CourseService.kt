@@ -2,102 +2,77 @@ package com.SistemaAcademico.ApiSistemaAcademico.service
 
 import com.SistemaAcademico.ApiSistemaAcademico.exception.IdDoesNotExistException
 import com.SistemaAcademico.ApiSistemaAcademico.exception.NotFoundException
-import com.SistemaAcademico.ApiSistemaAcademico.exception.TimeoutException
+import com.SistemaAcademico.ApiSistemaAcademico.exception.QueryErrorException
 import com.SistemaAcademico.ApiSistemaAcademico.model.Course
-import com.SistemaAcademico.ApiSistemaAcademico.model.Institution
+import com.SistemaAcademico.ApiSistemaAcademico.model.dtos.ConsumingApii
 import com.SistemaAcademico.ApiSistemaAcademico.repository.CourseRepository
-import org.springframework.core.ParameterizedTypeReference
-import org.springframework.http.HttpMethod
-import org.springframework.http.HttpStatus
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import org.springframework.web.client.HttpServerErrorException
-import org.springframework.web.client.ResourceAccessException
-import org.springframework.web.client.RestTemplate
 import java.util.UUID
-import javax.naming.ServiceUnavailableException
+
 
 @Service
 class CourseService(
     private val courseRepository: CourseRepository,
-    private val restTemplate: RestTemplate,
+    private val consumingApii: ConsumingApii
 ) {
-
-    fun getAllInstitution(): List<Institution> {
-        val url = "http://localhost:8081/institutions"
-        val responseEntity = restTemplate.exchange(
-            url,
-            HttpMethod.GET,
-            null,
-            object : ParameterizedTypeReference<List<Institution>>() {}
-        )
-        return responseEntity.body ?: emptyList()
-    }
+    private val log = LoggerFactory.getLogger(javaClass)
 
     fun create(course: Course) {
 
-        val verifyId = getIdCheck(course.institutionId)
-
-        if (verifyId == true) {
-
-            courseRepository.save(course)
-
-        } else {
-
-            throw IdDoesNotExistException("não existe esse ID -${course.institutionId}", "ID001")
+        try {
+            log.info("m=create, stage=init, i=create, msg= Iniciando o met\u00F3do create da entidade curso.")
+            val verifyId = consumingApii.getIdCheck(course.institutionId)
+            if (verifyId == true) {
+                courseRepository.save(course)
+                log.info("m=create, stage=finished, i=create, msg= chamada do met\u00F3do create com sucesso.")
+            } else {
+                log.warn("m=create, stage=error, i=create, msg= chamada do met\\u00F3do create com Id inv\u00E1lido. ${course.institutionId}\"")
+                throw IdDoesNotExistException("não existe esse ID -${course.institutionId}", "ID001")
+            }
+        } catch (e: Exception) {
+            throw QueryErrorException("Erro na chamada do met\u00F3do", "C001")
         }
     }
 
     fun getAll(): List<Course> {
-        var courseList = courseRepository.findAll()
-        return courseList
+        try {
+            log.info("m=getAll, stage=init, i=get_all, msg= Iniciando o metódo getAll da entidade curso")
+            val courseList = courseRepository.findAll()
+            log.info("m=getAll, stage=finished, i=get_all, msg= chamada do met\u00F3do getAll da entidade curso")
+            return courseList
+
+        } catch (e: Exception) {
+            log.warn("m=getAll, stage=error, i=get_all, msg= erro ao chamar o met\u00F3do getAll")
+            throw QueryErrorException("Erro na chamada do met\u00F3do", "G001")
+        }
     }
 
     fun getById(id: UUID): Course {
-        return courseRepository.findById(id).orElseThrow { NotFoundException("Não existe esse ${id}", "C001") }
+        try {
+            return courseRepository.findById(id).orElseThrow { NotFoundException("N\u00E3o existe esse ${id}", "C001") }
+        } catch (e: Exception) {
+            throw QueryErrorException("Erro na chamada do met\u00F3do", "G002")
+        }
     }
 
     fun update(id: UUID, course: Course) {
-
-        val idExist =
-            courseRepository.findById(id).orElseThrow { NotFoundException("Esse id ${id} não foi encontrado", "C003") }
-        idExist.monthlyCost = course.monthlyCost
-        courseRepository.save(idExist)
-
+        try {
+            val idExist =
+                courseRepository.findById(id)
+                    .orElseThrow { NotFoundException("Esse id ${id} não foi encontrado", "C003") }
+            idExist.monthlyCost = course.monthlyCost
+            courseRepository.save(idExist)
+        } catch (e: Exception) {
+            throw QueryErrorException("Erro na chamada do met\u00F3do", "U001")
+        }
     }
 
     fun deleteById(id: UUID) {
-        courseRepository.deleteById(id)
-    }
-
-    fun getIdCheck(id: UUID): Boolean? {
-        return try {
-            val url = "http://localhost:8081/institutions/check/${id}"
-            val responseEntity = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                null,
-                object : ParameterizedTypeReference<Boolean>() {})
-            return responseEntity.body!!
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            when (ex) {
-                is ResourceAccessException ->
-                    throw TimeoutException("API FORA DO AR ", "T004")
-
-
-                is HttpServerErrorException -> {
-                    when (ex.statusCode) {
-                        HttpStatus.BAD_REQUEST, HttpStatus.INTERNAL_SERVER_ERROR,HttpStatus.NOT_FOUND -> throw ServiceUnavailableException(
-                            "${ex.message}"
-                        )
-
-                        else -> throw Exception("Erro ao consultar Instituição ${ex.message}")
-                    }
-                }
-
-                else -> throw ex
-
-            }
+        try {
+            courseRepository.deleteById(id)
+        } catch (e: Exception) {
+            throw QueryErrorException("Erro na chamada do met\u00F3do", "D001")
         }
     }
 }

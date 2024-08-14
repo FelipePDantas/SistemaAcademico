@@ -54,9 +54,4 @@ class CourseController(
         courseService.deleteById(id)
     }
 
-    @GetMapping("/institutions")
-    @ResponseStatus(HttpStatus.OK)
-    fun getInstituions(): List<Institution> {
-        return courseService.getAllInstitution()
-    }
 }
