@@ -2,7 +2,7 @@ package com.SistemaAcademico.ApiSistemaAcademico.service
 
 import com.SistemaAcademico.ApiSistemaAcademico.exception.IdDoesNotExistException
 import com.SistemaAcademico.ApiSistemaAcademico.exception.NotFoundException
-import com.SistemaAcademico.ApiSistemaAcademico.exception.QueryErrorException
+import com.SistemaAcademico.ApiSistemaAcademico.exception.TechnicalExecpetion
 import com.SistemaAcademico.ApiSistemaAcademico.model.Course
 import com.SistemaAcademico.ApiSistemaAcademico.model.dtos.ConsumingApii
 import com.SistemaAcademico.ApiSistemaAcademico.repository.CourseRepository
@@ -31,7 +31,7 @@ class CourseService(
                 throw IdDoesNotExistException("não existe esse ID -${course.institutionId}", "ID001")
             }
         } catch (e: Exception) {
-            throw QueryErrorException("Erro na chamada do met\u00F3do", "C001")
+            throw TechnicalExecpetion("Erro na chamada do met\u00F3do", "C001")
         }
     }
 
@@ -44,7 +44,7 @@ class CourseService(
 
         } catch (e: Exception) {
             log.warn("m=getAll, stage=error, i=get_all, msg= erro ao chamar o met\u00F3do getAll")
-            throw QueryErrorException("Erro na chamada do met\u00F3do", "G001")
+            throw TechnicalExecpetion("Erro na chamada do met\u00F3do", "G001")
         }
     }
 
@@ -52,7 +52,7 @@ class CourseService(
         try {
             return courseRepository.findById(id).orElseThrow { NotFoundException("N\u00E3o existe esse ${id}", "C001") }
         } catch (e: Exception) {
-            throw QueryErrorException("Erro na chamada do met\u00F3do", "G002")
+            throw TechnicalExecpetion("Erro na chamada do met\u00F3do", "G002")
         }
     }
 
@@ -64,7 +64,7 @@ class CourseService(
             idExist.monthlyCost = course.monthlyCost
             courseRepository.save(idExist)
         } catch (e: Exception) {
-            throw QueryErrorException("Erro na chamada do met\u00F3do", "U001")
+            throw TechnicalExecpetion("Erro na chamada do met\u00F3do", "U001")
         }
     }
 
@@ -72,7 +72,7 @@ class CourseService(
         try {
             courseRepository.deleteById(id)
         } catch (e: Exception) {
-            throw QueryErrorException("Erro na chamada do met\u00F3do", "D001")
+            throw TechnicalExecpetion("Erro na chamada do met\u00F3do", "D001")
         }
     }
 }

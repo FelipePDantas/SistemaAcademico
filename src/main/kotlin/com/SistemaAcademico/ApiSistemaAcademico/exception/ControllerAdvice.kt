@@ -49,8 +49,8 @@ class ControllerAdvice {
         return ResponseEntity(err, HttpStatus.CONFLICT)
     }
 
-    @ExceptionHandler(QueryErrorException::class)
-    fun timeoutException(ex: QueryErrorException, request: WebRequest): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(TechnicalExecpetion::class)
+    fun timeoutException(ex: TechnicalExecpetion, request: WebRequest): ResponseEntity<ErrorResponse> {
 
         var err = ErrorResponse(
             HttpStatus.CONFLICT.value(),
