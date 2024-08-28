@@ -19,8 +19,7 @@ class CourseService(
     private val log = LoggerFactory.getLogger(javaClass)
 
     fun create(course: Course) {
-
-        try {
+//        try {
             log.info("m=create, stage=init, i=create, msg= Iniciando o met\u00F3do create da entidade curso.")
             val verifyId = consumingApii.getIdCheck(course.institutionId)
             if (verifyId == true) {
@@ -30,9 +29,9 @@ class CourseService(
                 log.warn("m=create, stage=error, i=create, msg= chamada do met\\u00F3do create com Id inv\u00E1lido. ${course.institutionId}\"")
                 throw IdDoesNotExistException("não existe esse ID -${course.institutionId}", "ID001")
             }
-        } catch (e: Exception) {
-            throw TechnicalExecpetion("Erro na chamada do met\u00F3do", "C001")
-        }
+//        } catch (e: Exception) {
+//            throw TechnicalExecpetion("Erro na chamada do met\u00F3do", "C001")
+//        }
     }
 
     fun getAll(): List<Course> {
@@ -41,7 +40,6 @@ class CourseService(
             val courseList = courseRepository.findAll()
             log.info("m=getAll, stage=finished, i=get_all, msg= chamada do met\u00F3do getAll da entidade curso")
             return courseList
-
         } catch (e: Exception) {
             log.warn("m=getAll, stage=error, i=get_all, msg= erro ao chamar o met\u00F3do getAll")
             throw TechnicalExecpetion("Erro na chamada do met\u00F3do", "G001")
@@ -49,11 +47,7 @@ class CourseService(
     }
 
     fun getById(id: UUID): Course {
-        try {
             return courseRepository.findById(id).orElseThrow { NotFoundException("N\u00E3o existe esse ${id}", "C001") }
-        } catch (e: Exception) {
-            throw TechnicalExecpetion("Erro na chamada do met\u00F3do", "G002")
-        }
     }
 
     fun update(id: UUID, course: Course) {
@@ -68,7 +62,7 @@ class CourseService(
         }
     }
 
-    fun deleteById(id: UUID) {
+    fun deleteById(id: UUID){
         try {
             courseRepository.deleteById(id)
         } catch (e: Exception) {

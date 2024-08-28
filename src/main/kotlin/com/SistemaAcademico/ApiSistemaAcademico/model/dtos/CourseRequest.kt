@@ -4,7 +4,8 @@ import com.SistemaAcademico.ApiSistemaAcademico.enums.CourseTypeEnum
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
-import java.util.*
+import java.util.UUID
+
 
 class CourseRequest(
 

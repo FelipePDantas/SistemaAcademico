@@ -4,6 +4,7 @@ plugins {
 	kotlin("plugin.jpa") version "1.9.24"
 	kotlin("jvm") version "1.9.24"
 	kotlin("plugin.spring") version "1.9.24"
+	jacoco
 }
 
 group = "com.SistemaAcademico"
@@ -27,18 +28,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.3.1")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib")
-
-
-
-
-	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
-//	implementation("io.springfox:springfox-swagger2:3.0.0")
-	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
-//	implementation("io.springfox:springfox-swagger-ui:3.0.0")
-// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-//	compileOnly("javax.servlet:javax.servlet-api:4.0.1")
-
-
+	// https://mvnrepository.com/artifact/org.assertj/assertj-core
+	testImplementation("org.assertj:assertj-core:3.26.3")
+	// https://mvnrepository.com/artifact/io.mockk/mockk
+	testImplementation("io.mockk:mockk:1.12.2")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok

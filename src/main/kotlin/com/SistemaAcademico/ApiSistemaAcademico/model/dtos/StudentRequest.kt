@@ -1,7 +1,7 @@
 package com.SistemaAcademico.ApiSistemaAcademico.model.dtos
 
 import com.fasterxml.jackson.annotation.JsonAlias
-import java.util.*
+import java.util.UUID
 
 class StudentRequest(
 

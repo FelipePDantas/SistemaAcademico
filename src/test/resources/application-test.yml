@@ -3,11 +3,8 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://localhost:5432/sistema_academico
+    url: jdbc:postgresql://localhost:5432/sistema_academico_test
     username: postgres
     password: postgres
   jackson:
     default-property-inclusion: non_null
-
-urlServIntitution:
-  uri: "http://localhost:8081"

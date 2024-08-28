@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.ResourceAccessException
 import org.springframework.web.client.RestTemplate
-import java.util.*
+import java.util.UUID
+
 import javax.naming.ServiceUnavailableException
 
 @Component
